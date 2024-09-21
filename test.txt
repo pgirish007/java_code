@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Insert JSON Data Using Ajax</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function(){
+            $("#submitBtn").click(function(){
+                var jsonData = $("#jsonData").val();  // Get JSON data from textarea
+
+                // Send Ajax request
+                $.ajax({
+                    url: "DatabaseInsertServlet",
+                    type: "POST",
+                    data: {
+                        jsonData: jsonData  // Send JSON data
+                    },
+                    success: function(response) {
+                        var jsonResponse = JSON.parse(response);
+                        if (jsonResponse.status === "success") {
+                            $("#result").html("<p style='color:green;'>" + jsonResponse.message + "</p>");
+                        } else {
+                            $("#result").html("<p style='color:red;'>" + jsonResponse.message + "</p>");
+                        }
+                    },
+                    error: function() {
+                        $("#result").html("<p style='color:red;'>Error connecting to the server</p>");
+                    }
+                });
+            });
+        });
+    </script>
+</head>
+<body>
+
+    <h1>Insert JSON Data</h1>
+    <form id="jsonForm">
+        <label for="jsonData">Enter JSON Data:</label><br><br>
+        <textarea id="jsonData" name="jsonData" rows="10" cols="50">
+        {
+            "name": "John Doe",
+            "email": "john.doe@example.com",
+            "age": 30
+        }
+        </textarea><br><br>
+        <button type="button" id="submitBtn">Submit</button>
+    </form>
+
+    <div id="result"></div>
+
+</body>
+</html>
