@@ -1,52 +1,51 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Insert JSON Data Using Ajax</title>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script type="text/javascript">
-        $(document).ready(function(){
-            $("#submitBtn").click(function(){
-                var jsonData = $("#jsonData").val();  // Get JSON data from textarea
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
-                // Send Ajax request
-                $.ajax({
-                    url: "DatabaseInsertServlet",
-                    type: "POST",
-                    data: {
-                        jsonData: jsonData  // Send JSON data
-                    },
-                    success: function(response) {
-                        var jsonResponse = JSON.parse(response);
-                        if (jsonResponse.status === "success") {
-                            $("#result").html("<p style='color:green;'>" + jsonResponse.message + "</p>");
-                        } else {
-                            $("#result").html("<p style='color:red;'>" + jsonResponse.message + "</p>");
-                        }
-                    },
-                    error: function() {
-                        $("#result").html("<p style='color:red;'>Error connecting to the server</p>");
-                    }
-                });
-            });
-        });
-    </script>
-</head>
-<body>
+@WebServlet("/DatabaseInsertServlet")
+public class DatabaseInsertServlet extends HttpServlet {
+    private static final long serialVersionUID = 1L;
 
-    <h1>Insert JSON Data</h1>
-    <form id="jsonForm">
-        <label for="jsonData">Enter JSON Data:</label><br><br>
-        <textarea id="jsonData" name="jsonData" rows="10" cols="50">
-        {
-            "name": "John Doe",
-            "email": "john.doe@example.com",
-            "age": 30
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        response.setContentType("application/json");
+        PrintWriter out = response.getWriter();
+
+        // Get JSON structured data from the request
+        String jsonData = request.getParameter("jsonData");
+
+        try {
+            // Load Oracle JDBC Driver
+            Class.forName("oracle.jdbc.driver.OracleDriver");
+
+            // Connect to the Oracle database
+            Connection con = DriverManager.getConnection(
+                    "jdbc:oracle:thin:@//localhost:1521/xe", "username", "password");
+
+            // Insert query (storing the JSON data as CLOB)
+            String query = "INSERT INTO users (json_data) VALUES (?)";
+            PreparedStatement ps = con.prepareStatement(query);
+            ps.setString(1, jsonData); // Store the JSON as a CLOB
+
+            // Execute the update
+            int rowsInserted = ps.executeUpdate();
+
+            if (rowsInserted > 0) {
+                out.write("{\"status\": \"success\", \"message\": \"Record inserted successfully\"}");
+            } else {
+                out.write("{\"status\": \"failure\", \"message\": \"Record insertion failed\"}");
+            }
+
+            ps.close();
+            con.close();
+        } catch (Exception e) {
+            out.write("{\"status\": \"failure\", \"message\": \"" + e.getMessage() + "\"}");
         }
-        </textarea><br><br>
-        <button type="button" id="submitBtn">Submit</button>
-    </form>
-
-    <div id="result"></div>
-
-</body>
-</html>
+    }
+}
