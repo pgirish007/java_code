@@ -140,4 +140,28 @@ public class PropertiesValidator {
 
 
 
+<build>
+    <plugins>
+        <plugin>
+            <groupId>org.codehaus.mojo</groupId>
+            <artifactId>exec-maven-plugin</artifactId>
+            <version>3.1.0</version>
+            <executions>
+                <execution>
+                    <phase>verify</phase> <!-- Runs after tests, before packaging -->
+                    <goals>
+                        <goal>java</goal>
+                    </goals>
+                    <configuration>
+                        <mainClass>com.example.validation.PropertiesValidator</mainClass>
+                        <classpathScope>test</classpathScope>
+                    </configuration>
+                </execution>
+            </executions>
+        </plugin>
+    </plugins>
+</build>
+
+
+
 */
