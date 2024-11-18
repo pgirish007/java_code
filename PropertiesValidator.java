@@ -13,7 +13,7 @@ import java.util.jar.JarFile;
 import java.util.regex.Pattern;
 
 public class PropertiesValidator {
-    private static final Pattern VALID_KEY_VALUE_PATTERN = Pattern.compile("^[^\\s=]+=[^\\s]+$");
+    private static final Pattern VALID_KEY_VALUE_PATTERN = Pattern.compile("^[^\\s=]+[^\\s]=[^\\s].*[^\\s]$");
 
     public static void main(String[] args) {
         try {
