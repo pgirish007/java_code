@@ -139,7 +139,6 @@ public class PropertiesValidator {
 </build>
 
 
-
 <build>
     <plugins>
         <plugin>
@@ -148,13 +147,19 @@ public class PropertiesValidator {
             <version>3.1.0</version>
             <executions>
                 <execution>
-                    <phase>verify</phase> <!-- Runs after tests, before packaging -->
+                    <phase>verify</phase>
                     <goals>
                         <goal>java</goal>
                     </goals>
                     <configuration>
                         <mainClass>com.example.validation.PropertiesValidator</mainClass>
-                        <classpathScope>test</classpathScope>
+                        <arguments></arguments>
+                        <classpathScope>runtime</classpathScope>
+                        <includeProjectDependencies>true</includeProjectDependencies>
+                        <includePluginDependencies>true</includePluginDependencies>
+                        <classpath>
+                            <path>${project.build.outputDirectory}</path>
+                        </classpath>
                     </configuration>
                 </execution>
             </executions>
