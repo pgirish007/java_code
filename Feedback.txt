@@ -1,0 +1,9 @@
+Critical Thinking
+[Colleague's Name] demonstrated exceptional analytical skills by identifying pain points in the GitHub Copilot onboarding process and designing tools to address them effectively.
+Their ability to anticipate challenges faced by adoption leads and end-users ensured the development of tools that were both practical and impactful.
+Execution
+Delivered robust and intuitive tools that automated key aspects of the onboarding workflow, significantly reducing manual effort and time.
+Iterated on the tools based on real-time feedback, ensuring alignment with team requirements and maximizing usability across different roles.
+Support
+Provided comprehensive guidance and documentation to adoption leads, enabling them to onboard new users with ease and confidence.
+Maintained open communication channels to address questions and incorporate suggestions, fostering a collaborative and supportive environment.
