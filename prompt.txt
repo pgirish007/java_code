@@ -1,0 +1,67 @@
+Example 1
+
+Write a Python program that implements a distributed task queue system using a combination of RabbitMQ for message brokering and workers for task execution. The program should:
+
+1. Use RabbitMQ to queue tasks and ensure tasks are durable, so they are not lost if the broker restarts.
+2. Include a producer module that accepts tasks from users via an API (e.g., Flask).
+3. Include a worker module that pulls tasks from the queue, processes them, and stores results in a MongoDB database.
+4. Handle multiple worker instances to distribute the task load efficiently.
+5. Provide a monitoring dashboard using Flask-SocketIO to display the status of tasks in real time (pending, processing, completed).
+6. Implement logging for critical events (e.g., task received, task completed, errors) and allow configurable logging levels.
+7. Include exception handling to manage potential failures, such as RabbitMQ connection errors or task execution issues.
+
+Ensure the code follows best practices for modularity and reusability, and add comments explaining the logic of key components.
+
+Example 2
+
+
+Write a Java program that implements a distributed task processing system using Apache Kafka for message brokering. The program should:
+
+1. Use Kafka to queue tasks with appropriate configurations, such as partitions and replication, to ensure fault tolerance and scalability.
+2. Include a producer module that accepts tasks from users via a REST API (e.g., using Spring Boot) and sends these tasks to a Kafka topic.
+3. Include a consumer module that listens to the Kafka topic, processes the tasks, and stores the results in a MySQL database.
+4. Support multiple consumer instances to enable task distribution and parallel processing.
+5. Provide a monitoring dashboard using Spring Boot Actuator or a lightweight frontend to display task status (pending, processing, completed) in real time by integrating with Kafka Streams or querying the database.
+6. Implement detailed logging with SLF4J for critical events (e.g., task submission, processing completion, errors) and allow for configurable logging levels.
+7. Handle exceptions gracefully, including Kafka connection errors, message deserialization failures, and database write issues.
+8. Ensure modularity, with clear separation between producer, consumer, and utility classes, and add comments to explain the logic of key components.
+
+Make sure the code adheres to Java best practices, follows clean coding principles, and includes unit tests for core functionalities.
+
+Example 3
+
+Write a Java program that implements a distributed task processing system using Apache Kafka for message brokering, along with a front-end interface for monitoring and management. The program should:
+
+1. **Backend Implementation**:
+   - Use Kafka to queue tasks with proper configurations for fault tolerance (e.g., partitions, replication) and ensure efficient task distribution.
+   - Include a producer module using Spring Boot to accept tasks via a REST API and send them to a Kafka topic.
+   - Include a consumer module that listens to Kafka topics, processes tasks, and stores the results in a MySQL database.
+   - Enable multiple consumer instances to support parallel task processing.
+   - Implement Kafka Streams for aggregating task statuses (e.g., pending, processing, completed) and maintaining an up-to-date status log.
+
+2. **Frontend Implementation**:
+   - Build a web-based interface using React (or Angular) for task monitoring and management:
+     - **Dashboard**: Display the list of tasks with their statuses (pending, processing, completed), timestamps, and any associated metadata.
+     - **Management Features**: Provide controls for pausing, resuming, or retrying failed tasks.
+     - **Real-time Updates**: Integrate WebSockets or long polling to fetch task statuses in real time from the backend.
+     - **Filter and Search**: Allow users to search and filter tasks based on attributes like status, timestamps, or task type.
+
+3. **Integration**:
+   - Use Spring Boot to serve the backend APIs and connect the front-end application to fetch task data and trigger management actions.
+   - Leverage Kafka’s built-in tools and APIs for administrative actions, such as rebalancing partitions or querying offsets, and expose these as backend services.
+
+4. **Exception Handling**:
+   - Implement robust error handling for backend processes, such as Kafka connection failures, message deserialization issues, or database write errors.
+   - Provide meaningful error messages and status updates on the frontend when operations fail.
+
+5. **Logging and Monitoring**:
+   - Use SLF4J for detailed logging of critical events, such as task creation, processing, and completion, with configurable log levels.
+   - Integrate Spring Boot Actuator and Prometheus/Grafana for backend monitoring and metrics visualization.
+
+6. **Testing**:
+   - Include unit tests for producer, consumer, and API endpoints using JUnit.
+   - Add integration tests to verify the interaction between Kafka, the database, and the front-end application.
+
+7. **Documentation**:
+   - Provide comprehensive comments and a README file explaining how to set up and run the system, including backend services, Kafka configuration, and the front-end application.
+
