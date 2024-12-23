@@ -28,7 +28,7 @@ Write a Java program that implements a distributed task processing system using 
 
 Make sure the code adheres to Java best practices, follows clean coding principles, and includes unit tests for core functionalities.
 
-Example 3
+Prompt for a Complex Code Generation
 
 Write a Java program that implements a distributed task processing system using Apache Kafka for message brokering, along with a front-end interface for monitoring and management. The program should:
 
@@ -65,3 +65,7 @@ Write a Java program that implements a distributed task processing system using 
 7. **Documentation**:
    - Provide comprehensive comments and a README file explaining how to set up and run the system, including backend services, Kafka configuration, and the front-end application.
 
+Why This Works
+The prompt now specifies both backend and frontend requirements, creating a full-stack system.
+It provides detailed guidance for Kafka's messaging layer while outlining specific features for user interactivity and real-time monitoring.
+Copilot can generate modular components incrementally based on the defined structure.
