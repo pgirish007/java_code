@@ -69,3 +69,34 @@ Why This Works
 The prompt now specifies both backend and frontend requirements, creating a full-stack system.
 It provides detailed guidance for Kafka's messaging layer while outlining specific features for user interactivity and real-time monitoring.
 Copilot can generate modular components incrementally based on the defined structure.
+
+
+
+*******
+
+
+This entire context is based on predictive analysis and for this you use Python technology and To make this framework more dynamic and AI-driven, the following updates can be introduced to the existing system to predict user actions, manage caching intelligently, and dynamically adapt based on usage patterns:
+
+1. **Backend**:
+   - This is an existing table that captures user actions from a web application
+   - These user actions are stored in a database table called event_logs
+   - these user actions are associated to the employee id and the time that user performed action like build, explore, knowledgebase, tooling, manage etcs
+   
+2. **Predictive analysis expectation**:
+     - Primarily two scenarions:
+     	- **Scenario 1**: In this case when user login to the application for the first time and has never ever performed any action on the application, I want to show a message on about how to use applcation, tutorials, videos to use best out of the application
+     	- **Scenario 2**: User have been to the application and user has done many things on the application and in this case we want to show user on mostly action events by the user and show to the user and ask user if he or she would like to do the same again. examples would be user did Oracle patching 5 files in last 10 days, Linux build 4 times and all others are like 1 or two times then we should Oracle or linux activitiy that user performed
+     	
+3. **Development**:
+   - Develop python based framework and APIs that would be called from the a web application from where user actions are captured and return a json structure to show outcome of above two scenarios
+   - API needs to be performance driven and should be 1-2 seconds response time and to achieve that if python framework needs to create a cache of the user action then do that
+   - API is going to be a readonly operations and do not need to have any sort of authentication
+   - API would expect the user information to which then need to map to user action and do all predictive analysis work
+
+3. **Integration**:
+   - Web application that captures user action would then need to make a call to that API and show result.
+   
+4. **Documentation**:
+   - Provide comprehensive comments and a README file explaining how to set up and run the system, including backend services, Kafka configuration, and the front-end application.
+
+
