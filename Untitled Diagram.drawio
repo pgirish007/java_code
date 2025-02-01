@@ -86,8 +86,8 @@
             </Array>
           </mxGeometry>
         </mxCell>
-        <mxCell id="aoypDPzq1Keb2BFeXAgh-24" value="&lt;h1 style=&quot;margin-top: 0px;&quot;&gt;PAYLOAD&lt;/h1&gt;&lt;p&gt;&lt;b&gt;RAW_PAYLOAD&lt;/b&gt; = ONE TO ONE MAPPING WITH WHAT FORM HAS AND DATA SUBMITTED BY USER&lt;/p&gt;&lt;p&gt;&lt;b&gt;REQUEST_PAYLOAD&lt;/b&gt;&amp;nbsp;= REQUEST PAYLOAD THAT WAS SUBMITTED TO API&lt;/p&gt;&lt;p&gt;&lt;b&gt;RESPONSE_PAYLOAD&lt;/b&gt;&amp;nbsp;= RESPONSE PAYLOAD RECEIVED FROM API&lt;/p&gt;" style="text;html=1;whiteSpace=wrap;overflow=hidden;rounded=0;" vertex="1" parent="1">
-          <mxGeometry x="1710" y="563" width="600" height="120" as="geometry" />
+        <mxCell id="aoypDPzq1Keb2BFeXAgh-24" value="&lt;h1 style=&quot;margin-top: 0px;&quot;&gt;PAYLOAD&lt;/h1&gt;&lt;p&gt;&lt;b&gt;RAW_PAYLOAD&lt;/b&gt; = ONE TO ONE MAPPING WITH WHAT FORM HAS AND DATA SUBMITTED BY USER&lt;/p&gt;&lt;p&gt;&lt;b&gt;REQUEST_PAYLOAD&lt;/b&gt;&amp;nbsp;= REQUEST PAYLOAD THAT WAS SUBMITTED TO API&lt;/p&gt;&lt;p&gt;&lt;b&gt;RESPONSE_PAYLOAD&lt;/b&gt;&amp;nbsp;= RESPONSE PAYLOAD RECEIVED FROM API&lt;/p&gt;&lt;p&gt;&lt;b&gt;FORM_TYPE&lt;/b&gt;&amp;nbsp; = THIS IS THE FORM WHERE DATA CAME FROM&amp;nbsp;&lt;/p&gt;&lt;p&gt;&lt;b&gt;VERSION&lt;/b&gt; = THIS IS THE FORM VERSION THAT WOULD THEN MATCH TO THE DATA&lt;/p&gt;" style="text;html=1;whiteSpace=wrap;overflow=hidden;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="1710" y="563" width="600" height="187" as="geometry" />
         </mxCell>
         <mxCell id="aoypDPzq1Keb2BFeXAgh-25" value="User submit" style="text;strokeColor=none;fillColor=none;html=1;fontSize=24;fontStyle=1;verticalAlign=middle;align=center;" vertex="1" parent="1">
           <mxGeometry x="580" y="30" width="170" height="40" as="geometry" />
