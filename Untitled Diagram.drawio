@@ -253,7 +253,7 @@
           </mxGeometry>
         </mxCell>
         <mxCell id="aoypDPzq1Keb2BFeXAgh-85" value="" style="swimlane;shape=mxgraph.bootstrap.anchor;strokeColor=#666666;fillColor=none;fontColor=#666666;fontStyle=0;childLayout=stackLayout;horizontal=1;startSize=0;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=0;marginBottom=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
-          <mxGeometry x="660" y="718" width="120" height="250" as="geometry" />
+          <mxGeometry x="683" y="718" width="120" height="200" as="geometry" />
         </mxCell>
         <mxCell id="aoypDPzq1Keb2BFeXAgh-86" value="View" style="text;strokeColor=default;align=center;verticalAlign=middle;spacingLeft=10;spacingRight=10;overflow=hidden;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rotatable=0;whiteSpace=wrap;html=1;shape=mxgraph.mockup.topButton;rSize=10;fillColor=none;fontColor=light-dark(#000000, #121212);fontSize=17;fontStyle=0;" vertex="1" parent="aoypDPzq1Keb2BFeXAgh-85">
           <mxGeometry width="120" height="50" as="geometry" />
@@ -266,9 +266,6 @@
         </mxCell>
         <mxCell id="aoypDPzq1Keb2BFeXAgh-132" value="Support" style="text;strokeColor=inherit;align=center;verticalAlign=middle;spacingLeft=10;spacingRight=10;overflow=hidden;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rotatable=0;whiteSpace=wrap;html=1;shape=mxgraph.mockup.bottomButton;rSize=10;fillColor=inherit;fontColor=inherit;fontSize=17;fontStyle=1;" vertex="1" parent="aoypDPzq1Keb2BFeXAgh-85">
           <mxGeometry y="150" width="120" height="50" as="geometry" />
-        </mxCell>
-        <mxCell id="aoypDPzq1Keb2BFeXAgh-89" value="Support" style="text;strokeColor=inherit;align=center;verticalAlign=middle;spacingLeft=10;spacingRight=10;overflow=hidden;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rotatable=0;whiteSpace=wrap;html=1;shape=mxgraph.mockup.bottomButton;rSize=10;fillColor=inherit;fontColor=inherit;fontSize=17;fontStyle=1;" vertex="1" parent="aoypDPzq1Keb2BFeXAgh-85">
-          <mxGeometry y="200" width="120" height="50" as="geometry" />
         </mxCell>
         <mxCell id="aoypDPzq1Keb2BFeXAgh-90" value="" style="endArrow=classic;html=1;rounded=0;entryX=0.008;entryY=1;entryDx=0;entryDy=0;entryPerimeter=0;" edge="1" parent="1" source="aoypDPzq1Keb2BFeXAgh-70" target="aoypDPzq1Keb2BFeXAgh-87">
           <mxGeometry width="50" height="50" relative="1" as="geometry">
