@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tab Navigation with Hash</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+        .tabs {
+            display: flex;
+            cursor: pointer;
+        }
+        .tab {
+            padding: 10px 20px;
+            border: 1px solid #ccc;
+            background: #f4f4f4;
+            margin-right: 5px;
+        }
+        .tab.active {
+            background: #007bff;
+            color: white;
+        }
+        .tab-content {
+            display: none;
+            padding: 20px;
+            border: 1px solid #ccc;
+            margin-top: 5px;
+        }
+        .tab-content.active {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="tabs">
+        <div class="tab" data-tab="tab1">Tab 1</div>
+        <div class="tab" data-tab="tab2">Tab 2</div>
+        <div class="tab" data-tab="tab3">Tab 3</div>
+    </div>
+
+    <div class="tab-content" id="tab1">Content for Tab 1</div>
+    <div class="tab-content" id="tab2">Content for Tab 2</div>
+    <div class="tab-content" id="tab3">Content for Tab 3</div>
+
+    <script>
+        function switchTab(tabId) {
+            // Remove 'active' class from all tabs and content
+            document.querySelectorAll(".tab, .tab-content").forEach(el => el.classList.remove("active"));
+
+            // Add 'active' class to the selected tab and content
+            document.querySelector(`.tab[data-tab="${tabId}"]`)?.classList.add("active");
+            document.getElementById(tabId)?.classList.add("active");
+        }
+
+        function handleHashChange() {
+            const hash = window.location.hash.substring(1); // Get hash without '#'
+            if (hash) {
+                switchTab(hash);
+            }
+        }
+
+        document.addEventListener("DOMContentLoaded", () => {
+            // Set initial tab based on URL hash or default to the first tab
+            if (window.location.hash) {
+                handleHashChange();
+            } else {
+                const firstTab = document.querySelector(".tab")?.getAttribute("data-tab");
+                if (firstTab) {
+                    window.location.hash = firstTab; // Set default hash
+                }
+            }
+
+            // Add click event listener for tabs
+            document.querySelectorAll(".tab").forEach(tab => {
+                tab.addEventListener("click", function () {
+                    const tabId = this.getAttribute("data-tab");
+                    window.location.hash = tabId; // Update URL hash
+                });
+            });
+
+            // Listen to hash changes (for back/forward button support)
+            window.addEventListener("hashchange", handleHashChange);
+        });
+    </script>
+
+</body>
+</html>
