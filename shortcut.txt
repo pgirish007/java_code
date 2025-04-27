@@ -44,44 +44,51 @@ public class ShortcutScriptBuilder {
         return result;
     }
 
-    public static String generateShortcutScript(ServletContext context, String pageName) {
-        List<Shortcut> shortcuts = getShortcutsForPage(context, pageName);
-        if (shortcuts.isEmpty()) {
-            return ""; // No shortcuts? Don't generate anything.
-        }
-
-        StringBuilder sb = new StringBuilder();
-        sb.append("<script>\n");
-        sb.append("(function() {\n");
-        sb.append("  const shortcutConfig = [\n");
-
-        for (Shortcut s : shortcuts) {
-            sb.append("    { keys: '").append(s.keys)
-              .append("', url: '").append(s.url)
-              .append("', description: '").append(s.description.replace("'", "\\'"))
-              .append("' },\n");
-        }
-
-        sb.append("  ];\n\n");
-
-        sb.append("  document.addEventListener('keydown', function(event) {\n");
-        sb.append("    if (['INPUT', 'TEXTAREA', 'SELECT'].includes(event.target.tagName)) return;\n");
-        sb.append("    const keyCombo = (event.altKey ? 'Alt+' : '') +\n");
-        sb.append("      (event.ctrlKey ? 'Ctrl+' : '') +\n");
-        sb.append("      (event.shiftKey ? 'Shift+' : '') +\n");
-        sb.append("      event.key.toUpperCase();\n\n");
-        sb.append("    const shortcut = shortcutConfig.find(s => s.keys.toUpperCase() === keyCombo);\n");
-        sb.append("    if (shortcut) {\n");
-        sb.append("      event.preventDefault();\n");
-        sb.append("      window.location.href = shortcut.url;\n");
-        sb.append("    }\n");
-        sb.append("  });\n");
-        sb.append("})();\n");
-        sb.append("</script>\n");
-
-        return sb.toString();
+public static String generateShortcutScript(ServletContext context, String pageName) {
+    List<Shortcut> shortcuts = getShortcutsForPage(context, pageName);
+    if (shortcuts.isEmpty()) {
+        return ""; // No shortcuts? Don't generate anything.
     }
+
+    StringBuilder sb = new StringBuilder();
+    sb.append("<script>\n");
+    sb.append("(function() {\n");
+    sb.append("  const shortcutConfig = [\n");
+
+    for (Shortcut s : shortcuts) {
+        sb.append("    { keys: '").append(s.keys)
+          .append("', url: '").append(s.url)
+          .append("', description: '").append(s.description.replace("'", "\\'"))
+          .append("' },\n");
+    }
+
+    sb.append("  ];\n\n");
+
+    sb.append("  function normalizeKeyCombo(event) {\n");
+    sb.append("    const parts = [];\n");
+    sb.append("    if (event.ctrlKey) parts.push('Ctrl');\n");
+    sb.append("    if (event.altKey) parts.push('Alt');\n");
+    sb.append("    if (event.shiftKey) parts.push('Shift');\n");
+    sb.append("    const key = event.key.length === 1 ? event.key.toUpperCase() : event.key;\n");
+    sb.append("    parts.push(key);\n");
+    sb.append("    return parts.join('+');\n");
+    sb.append("  }\n\n");
+
+    sb.append("  document.addEventListener('keydown', function(event) {\n");
+    sb.append("    if (['INPUT', 'TEXTAREA', 'SELECT'].includes(event.target.tagName)) return;\n");
+    sb.append("    const keyCombo = normalizeKeyCombo(event);\n\n");
+    sb.append("    const shortcut = shortcutConfig.find(s => s.keys.toUpperCase() === keyCombo);\n");
+    sb.append("    if (shortcut) {\n");
+    sb.append("      event.preventDefault();\n");
+    sb.append("      window.location.href = shortcut.url;\n");
+    sb.append("    }\n");
+    sb.append("  });\n");
+    sb.append("})();\n");
+    sb.append("</script>\n");
+
+    return sb.toString();
 }
+
 
 
 
