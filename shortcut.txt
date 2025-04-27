@@ -1,0 +1,57 @@
+const shortcutConfig = [
+  {
+    keys: "F2",
+    url: "/yourapp/loadbalancer",
+    description: "Go to Load Balancer"
+  },
+  {
+    keys: "F3",
+    url: "/yourapp/servermanager",
+    description: "Go to Server Manager"
+  },
+  {
+    keys: "Alt+P",
+    url: "/yourapp/profile",
+    description: "Open User Profile"
+  },
+  {
+    keys: "Ctrl+Shift+D",
+    url: "/yourapp/dashboard",
+    description: "Open Dashboard"
+  },
+  {
+    keys: "Ctrl+N",
+    url: "/yourapp/newentry",
+    description: "Create New Entry"
+  }
+];
+
+
+
+const shortcutConfig = [
+  {
+    keys: "F2",
+    url: "/yourapp/loadbalancer",
+    description: "Go to Load Balancer"
+  },
+  {
+    keys: "F3",
+    url: "/yourapp/servermanager",
+    description: "Go to Server Manager"
+  },
+  {
+    keys: "Alt+P",
+    url: "/yourapp/profile",
+    description: "Open User Profile"
+  },
+  {
+    keys: "Ctrl+Shift+D",
+    url: "/yourapp/dashboard",
+    description: "Open Dashboard"
+  },
+  {
+    keys: "Ctrl+N",
+    url: "/yourapp/newentry",
+    description: "Create New Entry"
+  }
+];
