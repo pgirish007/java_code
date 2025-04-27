@@ -27,31 +27,22 @@ const shortcutConfig = [
 ];
 
 
+(function() {
+  document.addEventListener('keydown', function(event) {
+    if (['INPUT', 'TEXTAREA', 'SELECT'].includes(event.target.tagName)) return;
 
-const shortcutConfig = [
-  {
-    keys: "F2",
-    url: "/yourapp/loadbalancer",
-    description: "Go to Load Balancer"
-  },
-  {
-    keys: "F3",
-    url: "/yourapp/servermanager",
-    description: "Go to Server Manager"
-  },
-  {
-    keys: "Alt+P",
-    url: "/yourapp/profile",
-    description: "Open User Profile"
-  },
-  {
-    keys: "Ctrl+Shift+D",
-    url: "/yourapp/dashboard",
-    description: "Open Dashboard"
-  },
-  {
-    keys: "Ctrl+N",
-    url: "/yourapp/newentry",
-    description: "Create New Entry"
-  }
-];
+    const keyCombo = 
+      (event.altKey ? 'Alt+' : '') +
+      (event.ctrlKey ? 'Ctrl+' : '') +
+      (event.shiftKey ? 'Shift+' : '') +
+      event.key.toUpperCase();
+
+    const shortcut = shortcutConfig.find(s => s.keys.toUpperCase() === keyCombo);
+
+    if (shortcut) {
+      event.preventDefault();
+      window.location.href = shortcut.url;
+    }
+  });
+})();
+
