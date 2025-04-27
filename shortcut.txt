@@ -140,3 +140,15 @@ const shortcutConfig = [
   }
 ];
 
+
+// Set up in ServletContext
+String shortcutJson = """
+[
+  { "page": "loadbalancer.jsp", "keys": "F2", "url": "/yourapp/loadbalancer", "description": "Load Balancer Page" },
+  { "page": "dashboard.jsp", "keys": "F3", "url": "/yourapp/dashboard", "description": "Dashboard Page" }
+]
+""";
+
+servletContext.setAttribute("shortcutConfig", shortcutJson);
+
+
