@@ -35,18 +35,18 @@ public static void broadcastAlert(String message) {
         <style>
             #alertBanner {
                 display: none;
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%%;
                 background-color: #f8d7da;
                 color: #721c24;
-                border: 1px solid #f5c6cb;
-                padding: 15px;
-                margin: 10px;
-                border-radius: 5px;
-                position: fixed;
-                top: 20px;
-                left: 20%;
-                right: 20%;
-                z-index: 1000;
+                border-bottom: 1px solid #f5c6cb;
+                padding: 15px 20px;
                 font-family: Arial, sans-serif;
+                font-size: 16px;
+                z-index: 9999;
+                box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
             }
 
             #alertBanner img {
@@ -57,17 +57,22 @@ public static void broadcastAlert(String message) {
 
             #alertBanner button {
                 float: right;
-                background-color: #f5c6cb;
+                background-color: transparent;
                 border: none;
-                padding: 5px 10px;
+                font-size: 16px;
+                color: #721c24;
                 cursor: pointer;
+            }
+
+            #alertBanner button:hover {
+                text-decoration: underline;
             }
         </style>
 
         <div id='alertBanner'>
             <img src='images/alert.gif' alt='Alert'>
             <span>%s</span>
-            <button onclick='hideAlert()'>OK</button>
+            <button onclick='hideAlert()'>Dismiss</button>
         </div>
     """.formatted(message);
 
@@ -83,6 +88,7 @@ public static void broadcastAlert(String message) {
     }
     waitingClients.clear();
 }
+
 
 }
 
