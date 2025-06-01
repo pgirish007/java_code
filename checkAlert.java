@@ -31,27 +31,28 @@ public class AlertServlet extends HttpServlet {
     }
 
 public static void broadcastAlert(String message) {
-    String alertHtml = """
+String alertHtml = """
     <style>
         #alertBanner {
             position: fixed;
             top: -100px;
-            left: 0;
-            width: 100%%;
+            left: 50%%;
+            transform: translate(-50%, -100%);
+            width: 50%%;
             background-color: #f8d7da;
             color: #721c24;
-            border-bottom: 1px solid #f5c6cb;
+            border: 1px solid #f5c6cb;
             padding: 15px 20px;
             font-family: Arial, sans-serif;
             font-size: 16px;
             z-index: 9999;
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-            transform: translateY(-100%);
             transition: transform 0.5s ease;
+            border-radius: 8px;
         }
 
         #alertBanner.show {
-            transform: translateY(0);
+            transform: translate(-50%, 0);
         }
 
         #alertBanner img {
@@ -82,6 +83,7 @@ public static void broadcastAlert(String message) {
 """.formatted(message);
 
 
+
     for (AsyncContext ctx : waitingClients) {
         try {
             HttpServletResponse res = (HttpServletResponse) ctx.getResponse();
@@ -107,18 +109,17 @@ public static void broadcastAlert(String message) {
 
    function startLongPolling() {
     fetch('/checkAlert')
-        .then(response => response.text())
+         .then(response => response.text())
         .then(alertHtml => {
             const trimmed = alertHtml.trim();
             if (trimmed && trimmed.includes("alertBanner")) {
                 const container = document.getElementById("alertContainer");
                 container.innerHTML = trimmed;
-                
-                // Wait for DOM to render before adding "show"
+
                 const banner = document.getElementById("alertBanner");
                 setTimeout(() => {
                     banner.classList.add("show");
-                }, 50); // Small delay allows transition to kick in
+                }, 50);
             }
             startLongPolling();
         })
@@ -134,7 +135,7 @@ function hideAlert() {
         banner.classList.remove("show");
         setTimeout(() => {
             banner.style.display = "none";
-        }, 500); // Let the transition complete before hiding
+        }, 500);
     }
 }
 </script>
