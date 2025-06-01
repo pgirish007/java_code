@@ -31,56 +31,55 @@ public class AlertServlet extends HttpServlet {
     }
 
 public static void broadcastAlert(String message) {
-String alertHtml = """
-    <style>
-        #alertBanner {
-            position: fixed;
-            top: -100px;
-            left: 50%%;
-            transform: translate(-50%, -100%);
-            width: 50%%;
-            background-color: #f8d7da;
-            color: #721c24;
-            border: 1px solid #f5c6cb;
-            padding: 15px 20px;
-            font-family: Arial, sans-serif;
-            font-size: 16px;
-            z-index: 9999;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-            transition: transform 0.5s ease;
-            border-radius: 8px;
-        }
+String alertHtml = "<style>\n" +
+"    #alertBanner {\n" +
+"        position: fixed;\n" +
+"        top: -100px;\n" +
+"        left: 50%;\n" +
+"        transform: translate(-50%, -100%);\n" +
+"        width: 50%;\n" +
+"        background-color: #f8d7da;\n" +
+"        color: #721c24;\n" +
+"        border: 1px solid #f5c6cb;\n" +
+"        padding: 15px 20px;\n" +
+"        font-family: Arial, sans-serif;\n" +
+"        font-size: 16px;\n" +
+"        z-index: 9999;\n" +
+"        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);\n" +
+"        transition: transform 0.5s ease;\n" +
+"        border-radius: 8px;\n" +
+"    }\n" +
+"\n" +
+"    #alertBanner.show {\n" +
+"        transform: translate(-50%, 0);\n" +
+"    }\n" +
+"\n" +
+"    #alertBanner img {\n" +
+"        vertical-align: middle;\n" +
+"        margin-right: 10px;\n" +
+"        height: 24px;\n" +
+"    }\n" +
+"\n" +
+"    #alertBanner button {\n" +
+"        float: right;\n" +
+"        background-color: transparent;\n" +
+"        border: none;\n" +
+"        font-size: 16px;\n" +
+"        color: #721c24;\n" +
+"        cursor: pointer;\n" +
+"    }\n" +
+"\n" +
+"    #alertBanner button:hover {\n" +
+"        text-decoration: underline;\n" +
+"    }\n" +
+"</style>\n" +
+"\n" +
+"<div id='alertBanner'>\n" +
+"    <img src='images/alert.gif' alt='Alert'>\n" +
+"    <span>" + message + "</span>\n" +
+"    <button onclick='hideAlert()'>Dismiss</button>\n" +
+"</div>";
 
-        #alertBanner.show {
-            transform: translate(-50%, 0);
-        }
-
-        #alertBanner img {
-            vertical-align: middle;
-            margin-right: 10px;
-            height: 24px;
-        }
-
-        #alertBanner button {
-            float: right;
-            background-color: transparent;
-            border: none;
-            font-size: 16px;
-            color: #721c24;
-            cursor: pointer;
-        }
-
-        #alertBanner button:hover {
-            text-decoration: underline;
-        }
-    </style>
-
-    <div id='alertBanner'>
-        <img src='images/alert.gif' alt='Alert'>
-        <span>%s</span>
-        <button onclick='hideAlert()'>Dismiss</button>
-    </div>
-""".formatted(message);
 
 
 
