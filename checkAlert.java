@@ -32,49 +32,55 @@ public class AlertServlet extends HttpServlet {
 
 public static void broadcastAlert(String message) {
     String alertHtml = """
-        <style>
-            #alertBanner {
-                display: none;
-                position: fixed;
-                top: 0;
-                left: 0;
-                width: 100%%;
-                background-color: #f8d7da;
-                color: #721c24;
-                border-bottom: 1px solid #f5c6cb;
-                padding: 15px 20px;
-                font-family: Arial, sans-serif;
-                font-size: 16px;
-                z-index: 9999;
-                box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-            }
+    <style>
+        #alertBanner {
+            position: fixed;
+            top: -100px;
+            left: 0;
+            width: 100%%;
+            background-color: #f8d7da;
+            color: #721c24;
+            border-bottom: 1px solid #f5c6cb;
+            padding: 15px 20px;
+            font-family: Arial, sans-serif;
+            font-size: 16px;
+            z-index: 9999;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            transform: translateY(-100%);
+            transition: transform 0.5s ease;
+        }
 
-            #alertBanner img {
-                vertical-align: middle;
-                margin-right: 10px;
-                height: 24px;
-            }
+        #alertBanner.show {
+            transform: translateY(0);
+        }
 
-            #alertBanner button {
-                float: right;
-                background-color: transparent;
-                border: none;
-                font-size: 16px;
-                color: #721c24;
-                cursor: pointer;
-            }
+        #alertBanner img {
+            vertical-align: middle;
+            margin-right: 10px;
+            height: 24px;
+        }
 
-            #alertBanner button:hover {
-                text-decoration: underline;
-            }
-        </style>
+        #alertBanner button {
+            float: right;
+            background-color: transparent;
+            border: none;
+            font-size: 16px;
+            color: #721c24;
+            cursor: pointer;
+        }
 
-        <div id='alertBanner'>
-            <img src='images/alert.gif' alt='Alert'>
-            <span>%s</span>
-            <button onclick='hideAlert()'>Dismiss</button>
-        </div>
-    """.formatted(message);
+        #alertBanner button:hover {
+            text-decoration: underline;
+        }
+    </style>
+
+    <div id='alertBanner'>
+        <img src='images/alert.gif' alt='Alert'>
+        <span>%s</span>
+        <button onclick='hideAlert()'>Dismiss</button>
+    </div>
+""".formatted(message);
+
 
     for (AsyncContext ctx : waitingClients) {
         try {
@@ -99,25 +105,37 @@ public static void broadcastAlert(String message) {
         startLongPolling();
     };
 
-    function startLongPolling() {
-        fetch('/checkAlert')
-            .then(response => response.text())
-            .then(alertHtml => {
-                if (alertHtml && alertHtml.trim()) {
-                    document.getElementById("alertContainer").innerHTML = alertHtml;
-                    document.getElementById("alertBanner").style.display = "block";
-                }
-                startLongPolling();
-            })
-            .catch(err => {
-                console.error("Polling error:", err);
-                setTimeout(startLongPolling, 5000);
-            });
-    }
+   function startLongPolling() {
+    fetch('/checkAlert')
+        .then(response => response.text())
+        .then(alertHtml => {
+            const trimmed = alertHtml.trim();
+            if (trimmed && trimmed.includes("alertBanner")) {
+                const container = document.getElementById("alertContainer");
+                container.innerHTML = trimmed;
+                
+                // Wait for DOM to render before adding "show"
+                const banner = document.getElementById("alertBanner");
+                setTimeout(() => {
+                    banner.classList.add("show");
+                }, 50); // Small delay allows transition to kick in
+            }
+            startLongPolling();
+        })
+        .catch(err => {
+            console.error("Polling error:", err);
+            setTimeout(startLongPolling, 5000);
+        });
+}
 
-    function hideAlert() {
-        const banner = document.getElementById("alertBanner");
-        if (banner) banner.style.display = "none";
+function hideAlert() {
+    const banner = document.getElementById("alertBanner");
+    if (banner) {
+        banner.classList.remove("show");
+        setTimeout(() => {
+            banner.style.display = "none";
+        }, 500); // Let the transition complete before hiding
     }
+}
 </script>
 
