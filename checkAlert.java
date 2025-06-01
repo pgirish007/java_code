@@ -30,43 +30,88 @@ public class AlertServlet extends HttpServlet {
         });
     }
 
-    // Call this method from admin action to broadcast alert
-    public static void broadcastAlert(String alertMessage) {
-        for (AsyncContext ctx : waitingClients) {
-            try {
-                HttpServletResponse res = (HttpServletResponse) ctx.getResponse();
-                res.setContentType("application/json");
-                res.getWriter().write("{\"message\": \"" + alertMessage + "\"}");
-                ctx.complete();
-            } catch (IOException e) {
-                e.printStackTrace();
+public static void broadcastAlert(String message) {
+    String alertHtml = """
+        <style>
+            #alertBanner {
+                display: none;
+                background-color: #f8d7da;
+                color: #721c24;
+                border: 1px solid #f5c6cb;
+                padding: 15px;
+                margin: 10px;
+                border-radius: 5px;
+                position: fixed;
+                top: 20px;
+                left: 20%;
+                right: 20%;
+                z-index: 1000;
+                font-family: Arial, sans-serif;
             }
+
+            #alertBanner img {
+                vertical-align: middle;
+                margin-right: 10px;
+                height: 24px;
+            }
+
+            #alertBanner button {
+                float: right;
+                background-color: #f5c6cb;
+                border: none;
+                padding: 5px 10px;
+                cursor: pointer;
+            }
+        </style>
+
+        <div id='alertBanner'>
+            <img src='images/alert.gif' alt='Alert'>
+            <span>%s</span>
+            <button onclick='hideAlert()'>OK</button>
+        </div>
+    """.formatted(message);
+
+    for (AsyncContext ctx : waitingClients) {
+        try {
+            HttpServletResponse res = (HttpServletResponse) ctx.getResponse();
+            res.setContentType("text/html");
+            res.getWriter().write(alertHtml);
+            ctx.complete();
+        } catch (IOException e) {
+            e.printStackTrace();
         }
-        waitingClients.clear();
     }
+    waitingClients.clear();
+}
+
 }
 
 
+<div id="alertContainer"></div>
 <script>
-window.onload = function() {
-    console.log("Page fully loaded");
-    startLongPolling();
-};
+    window.onload = function () {
+        startLongPolling();
+    };
 
-function startLongPolling() {
-    fetch('/checkAlert')
-        .then(response => response.json())
-        .then(data => {
-            if (data && data.message) {
-                alert("Admin Alert: " + data.message);
-            }
-            // Restart the long poll
-            startLongPolling();
-        })
-        .catch(err => {
-            console.error("Error in long polling", err);
-            // Retry after a delay
-            setTimeout(startLongPolling, 5000);
-        });
-}
+    function startLongPolling() {
+        fetch('/checkAlert')
+            .then(response => response.text())
+            .then(alertHtml => {
+                if (alertHtml && alertHtml.trim()) {
+                    document.getElementById("alertContainer").innerHTML = alertHtml;
+                    document.getElementById("alertBanner").style.display = "block";
+                }
+                startLongPolling();
+            })
+            .catch(err => {
+                console.error("Polling error:", err);
+                setTimeout(startLongPolling, 5000);
+            });
+    }
+
+    function hideAlert() {
+        const banner = document.getElementById("alertBanner");
+        if (banner) banner.style.display = "none";
+    }
 </script>
+
