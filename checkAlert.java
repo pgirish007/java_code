@@ -138,33 +138,71 @@ public class AlertServlet extends HttpServlet {
         return meta ? meta.getAttribute("content") : null;
     }
 
-    function startLongPolling() {
-        if (!employeeId) {
-            console.error("Employee ID not found.");
-            return;
+let shouldPoll = true;
+let currentController = null;
+
+function startLongPolling() {
+    const employeeIdMeta = document.querySelector("meta[name='employeeId']");
+    const employeeId = employeeIdMeta ? employeeIdMeta.getAttribute("content") : null;
+
+    if (!employeeId || !shouldPoll || document.visibilityState !== "visible") {
+        return;
+    }
+
+    // Abort any previous controller
+    if (currentController) {
+        currentController.abort();
+    }
+
+    currentController = new AbortController();
+
+    fetch(`/checkAlert?employeeId=${encodeURIComponent(employeeId)}`, {
+        signal: currentController.signal
+    })
+    .then(response => response.text())
+    .then(alertHtml => {
+        const trimmed = alertHtml.trim();
+        if (trimmed && trimmed.includes("alertBanner")) {
+            const container = document.getElementById("alertContainer");
+            container.innerHTML = trimmed;
+
+            const banner = document.getElementById("alertBanner");
+            setTimeout(() => {
+                banner.classList.add("show");
+            }, 50);
         }
 
-        fetch(`/checkAlert?employeeId=${encodeURIComponent(employeeId)}`)
-            .then(response => response.text())
-            .then(alertHtml => {
-                const trimmed = alertHtml.trim();
-                if (trimmed && trimmed.includes("alertBanner")) {
-                    const container = document.getElementById("alertContainer");
-                    container.innerHTML = trimmed;
+        if (shouldPoll && document.visibilityState === "visible") {
+            startLongPolling(); // Only restart if visible and allowed
+        }
+    })
+    .catch(err => {
+        if (err.name === 'AbortError') {
+            // Silently ignore aborted fetch
+            return;
+        }
+        console.warn("Polling error (safe catch):", err);
+        if (shouldPoll) {
+            setTimeout(startLongPolling, 5000);
+        }
+    });
+}
 
-                    const banner = document.getElementById("alertBanner");
-                    banner.style.display = "block";
-                    setTimeout(() => {
-                        banner.classList.add("show");
-                    }, 50);
-                }
-                startLongPolling(); // continue the loop
-            })
-            .catch(err => {
-                console.error("Polling error:", err);
-                setTimeout(startLongPolling, 5000);
-            });
+// Cancel polling if tab is not visible or page is unloading
+document.addEventListener("visibilitychange", () => {
+    if (document.visibilityState === "visible") {
+        startLongPolling();
+    } else if (currentController) {
+        currentController.abort();
     }
+});
+
+window.addEventListener("beforeunload", () => {
+    shouldPoll = false;
+    if (currentController) {
+        currentController.abort();
+    }
+});
 
     function hideAlert() {
         const banner = document.getElementById("alertBanner");
