@@ -130,40 +130,58 @@ public class AlertServlet extends HttpServlet {
 
 <div id="alertContainer"></div>
 <script>
-    window.onload = function () {
-        startLongPolling();
-    };
+  (function () {
+    const employeeId = getEmployeeIdFromMeta(); // or another method
 
-   function startLongPolling() {
-    fetch('/checkAlert')
-         .then(response => response.text())
-        .then(alertHtml => {
-            const trimmed = alertHtml.trim();
-            if (trimmed && trimmed.includes("alertBanner")) {
-                const container = document.getElementById("alertContainer");
-                container.innerHTML = trimmed;
-
-                const banner = document.getElementById("alertBanner");
-                setTimeout(() => {
-                    banner.classList.add("show");
-                }, 50);
-            }
-            startLongPolling();
-        })
-        .catch(err => {
-            console.error("Polling error:", err);
-            setTimeout(startLongPolling, 5000);
-        });
-}
-
-function hideAlert() {
-    const banner = document.getElementById("alertBanner");
-    if (banner) {
-        banner.classList.remove("show");
-        setTimeout(() => {
-            banner.style.display = "none";
-        }, 500);
+    function getEmployeeIdFromMeta() {
+        const meta = document.querySelector("meta[name='employeeId']");
+        return meta ? meta.getAttribute("content") : null;
     }
-}
+
+    function startLongPolling() {
+        if (!employeeId) {
+            console.error("Employee ID not found.");
+            return;
+        }
+
+        fetch(`/checkAlert?employeeId=${encodeURIComponent(employeeId)}`)
+            .then(response => response.text())
+            .then(alertHtml => {
+                const trimmed = alertHtml.trim();
+                if (trimmed && trimmed.includes("alertBanner")) {
+                    const container = document.getElementById("alertContainer");
+                    container.innerHTML = trimmed;
+
+                    const banner = document.getElementById("alertBanner");
+                    banner.style.display = "block";
+                    setTimeout(() => {
+                        banner.classList.add("show");
+                    }, 50);
+                }
+                startLongPolling(); // continue the loop
+            })
+            .catch(err => {
+                console.error("Polling error:", err);
+                setTimeout(startLongPolling, 5000);
+            });
+    }
+
+    function hideAlert() {
+        const banner = document.getElementById("alertBanner");
+        if (banner) {
+            banner.classList.remove("show");
+            setTimeout(() => {
+                banner.style.display = "none";
+            }, 500);
+        }
+    }
+
+    // Expose hideAlert globally for inline button handler
+    window.hideAlert = hideAlert;
+
+    // Start polling immediately
+    startLongPolling();
+})();
+
 </script>
 
