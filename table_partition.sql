@@ -10,7 +10,23 @@ PARTITION BY LIST (active) (
 
 ALTER TABLE my_table_new ENABLE ROW MOVEMENT;
 
+-- Step 3: Use DBMS_REDEFINITION to sync & switch
+BEGIN
+    DBMS_REDEFINITION.START_REDEF_TABLE(
+        uname       => 'MY_SCHEMA',
+        orig_table  => 'MY_TABLE',
+        int_table   => 'MY_TABLE_PART'
+    );
+
+    DBMS_REDEFINITION.FINISH_REDEF_TABLE(
+        uname       => 'MY_SCHEMA',
+        orig_table  => 'MY_TABLE',
+        int_table   => 'MY_TABLE_PART'
+    );
+END;
+
 INSERT /*+ APPEND */ INTO my_table_new
 SELECT * FROM my_table;
+
 
 COMMIT;
