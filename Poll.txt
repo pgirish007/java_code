@@ -1,0 +1,55 @@
+Here’s a ready-to-use poll draft you can post internally for your Q5 developer team:
+
+
+---
+
+📊 Poll Title:
+"GitHub Copilot – Is it Helping You Code Smarter?"
+
+📝 Description:
+We’ve been using GitHub Copilot for some time now, and it’s time to take a pulse check. Your feedback will help us decide how we continue using, refining, or replacing this tool. Please share your honest thoughts based on your day-to-day coding experience.
+
+Think about:
+
+Is Copilot making your work faster?
+
+Is it improving code quality?
+
+Is it helping you learn or just speeding up typing?
+
+Any frustrations or blockers it causes?
+
+
+📌 Poll Options:
+
+1. Absolutely – Game Changer 🚀 (Massively improves my productivity and code quality)
+
+
+2. Yes – Helpful 👍 (Improves my workflow, but not perfect)
+
+
+3. Neutral – Meh 😐 (Sometimes useful, sometimes not)
+
+
+4. Not Really – Limited Value 👎 (Doesn’t add much to my development process)
+
+
+5. No – More Hindrance than Help 🛑 (Slows me down or causes issues)
+
+
+
+💬 Optional Comment:
+If you can, please add a quick note in the comments about:
+
+Specific scenarios where Copilot shines for you
+
+Situations where it fails or produces poor suggestions
+
+Features you wish it had
+
+
+
+---
+
+If you want, I can also give you a more engaging, slightly humorous version so your developers are more likely to respond enthusiastically.
+
